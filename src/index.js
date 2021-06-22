@@ -1,15 +1,4 @@
 import ReactDOM from 'react-dom';
-import React from 'react';
-import './css/reset.css';
-
-
-
-function App(){
-
-    return(
-        <div>Olá!</div>
-    )
-
-}
+import App from './App';
 
 ReactDOM.render(<App/>, document.querySelector(".root"));
