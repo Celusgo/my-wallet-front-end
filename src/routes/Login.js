@@ -5,22 +5,18 @@ import { useState } from 'react';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-export default function Register() {
+export default function Login() {
 
     const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
 
-    function completeRegistry(e) {
+    function completeLogin(e) {
         e.preventDefault();
         setIsDisabled(true);
         const body = {
             name,
-            email,
-            password,
-            confirmPassword
+            password
         }
         console.log(body);
         //setIsDisabled(false);
@@ -30,7 +26,7 @@ export default function Register() {
         <Container>
             <ContentHolder>
                 <h1>MyWallet</h1>
-                <form onSubmit={completeRegistry}>
+                <form onSubmit={completeLogin}>
                     <Input
                         placeholder="Nome"
                         disabled={isDisabled}
@@ -38,22 +34,10 @@ export default function Register() {
                         onChange={(e) => setName(e.target.value)}
                     />
                     <Input
-                        placeholder="E-mail"
-                        disabled={isDisabled}
-                        type="text"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Input
                         placeholder="Senha"
                         disabled={isDisabled}
                         type="password"
                         onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Input
-                        placeholder="Confirme a senha"
-                        disabled={isDisabled}
-                        type="password"
-                        onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                     <Button
                         disabled={isDisabled}
@@ -64,12 +48,12 @@ export default function Register() {
                             color="#FFFFFF"
                             height={45}
                             width={100}
-                        /> : "Cadastrar"}
+                        /> : "Entrar"}
                     </Button>
                 </form>
-                <ToLogin>
-                    <Link to="/"><p>Já tem uma conta? Entre agora!</p></Link>
-                </ToLogin>
+                <ToRegister>
+                    <Link to="/register"><p>Primeira vez? Cadastre-se!</p></Link>
+                </ToRegister>
             </ContentHolder>
         </Container>
     )
@@ -144,7 +128,7 @@ const Button = styled.button`
     }
 `;
 
-const ToLogin = styled.div`
+const ToRegister = styled.div`
     margin-top:32px;
     font-family: 'Raleway';
     color:#FFFFFF;
