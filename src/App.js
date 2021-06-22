@@ -4,7 +4,8 @@ import './css/reset.css';
 import Register from './routes/Register';
 import Login from './routes/Login';
 import Homepage from './routes/Homepage';
-
+import NewIncome from './routes/NewIncome';
+import NewOutgoing from './routes/NewOutgoing';
 
 export default function App() {
 
@@ -19,6 +20,12 @@ export default function App() {
                     </Route>
                     <Route path="/homepage" exact>
                         <Homepage />
+                    </Route>
+                    <Route path="/newincome" exact>
+                        <NewIncome />
+                    </Route>
+                    <Route path="/newoutgoing" exact>
+                        <NewOutgoing />
                     </Route>
                 </Switch>
             </BrowserRouter>
