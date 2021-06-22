@@ -6,8 +6,8 @@ import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default function Login() {
-
-    const [name, setName] = useState("");
+    const history = useHistory();
+    const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
 
@@ -15,10 +15,10 @@ export default function Login() {
         e.preventDefault();
         setIsDisabled(true);
         const body = {
-            name,
+            user,
             password
         }
-        console.log(body);
+        history.push("/homepage");
         //setIsDisabled(false);
     }
 
@@ -28,10 +28,10 @@ export default function Login() {
                 <h1>MyWallet</h1>
                 <form onSubmit={completeLogin}>
                     <Input
-                        placeholder="Nome"
+                        placeholder="E-mail"
                         disabled={isDisabled}
-                        type="text"
-                        onChange={(e) => setName(e.target.value)}
+                        type="email"
+                        onChange={(e) => setUser(e.target.value)}
                     />
                     <Input
                         placeholder="Senha"

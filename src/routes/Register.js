@@ -6,7 +6,7 @@ import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default function Register() {
-
+    const history = useHistory();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -22,7 +22,7 @@ export default function Register() {
             password,
             confirmPassword
         }
-        console.log(body);
+        history.push("/");
         //setIsDisabled(false);
     }
 
