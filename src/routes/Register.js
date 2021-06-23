@@ -15,15 +15,28 @@ export default function Register() {
 
     function completeRegistry(e) {
         e.preventDefault();
+        if(name.trim().length === 0 || email.length === 0 || password.length < 4){
+            alert("Por favor, preencha os campos corretamente.");
+            return;
+        }
+        else if(password !== confirmPassword){
+            alert("As senhas não são iguais.");
+            return;
+        }
         setIsDisabled(true);
         const body = {
             name,
             email,
-            password,
-            confirmPassword
+            password
         }
-        history.push("/");
-        //setIsDisabled(false);
+        const request = axios.post("http://localhost:4000/register", body);
+        request.then(response => {
+            setIsDisabled(false);
+            history.push("/");
+        });
+        request.catch((error)=>{
+            alert(error.response.data)});
+            setIsDisabled(false);
     }
 
     return (
@@ -44,7 +57,7 @@ export default function Register() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <Input
-                        placeholder="Senha"
+                        placeholder="Senha (mínimo de 4 caracteres)"
                         disabled={isDisabled}
                         type="password"
                         onChange={(e) => setPassword(e.target.value)}
