@@ -11,7 +11,21 @@ export default function Homepage() {
     const history = useHistory();
     const {user} = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
-    console.log(user);
+    console.log(transactions);
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        }
+		const request = axios.get("http://localhost:4000/homepage", config);
+		request.then(response => {
+			setTransactions(response.data);
+		});
+        request.catch((error) => alert(error.response.data));
+	}, [user.token, user.id]);
+
     return (
         <Container>
             <ContentHolder>
@@ -23,13 +37,30 @@ export default function Homepage() {
                     />
                 </PageTitle>
                 <TransactionsHolder>
+                    <div className = "scroller">
                     {transactions.length === 0
                         ? <NoTransactions>
                             Não há registros de entrada ou saída
                         </NoTransactions>
-                        : <NoTransactions>
-                            Há transações aqui
-                        </NoTransactions>}
+                        : transactions.map((each)=>
+                        <EachTransaction>
+                            <div className = "leftside">
+                            <DateHolder>
+                                {each.data}
+                            </DateHolder>
+                            <NameHolder>
+                                {each.nomeTransacao}
+                            </NameHolder>
+                            </div>
+                            {each.saida === null
+                            ?<GreenSpan>{each.entrada}</GreenSpan>
+                            :<RedSpan>{each.saida}</RedSpan>}
+                        </EachTransaction>
+                        ).reverse()}
+                        </div>
+                        <AccountBalance>
+                            LALALA
+                        </AccountBalance>
                 </TransactionsHolder>
                 <ButtonsHolder>
                     <TransactionButton onClick = {()=>history.push("/newincome")}>
@@ -84,11 +115,18 @@ const PageTitle = styled.div`
 
 const TransactionsHolder = styled.div`
     box-sizing:border-box;
+    display:flex;
+    flex-direction: column;
     margin-top:22px;
     height:446px;
     width:90%;
     background-color:#FFFFFF;
     padding:23px 12px 10px 12px;
+    justify-content: space-between;
+    .scroller{
+        overflow-y: scroll;
+        margin-bottom:25px;
+    }
 `;
 
 const NoTransactions = styled.div`
@@ -129,4 +167,58 @@ p{
     color: #FFFFFF;
     text-align: start;
 }
+`;
+
+const EachTransaction = styled.div`
+    box-sizing:border-box;
+    display:flex;
+    width:100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top:20px;
+    .leftside{
+        display: flex;
+        width:100%;
+    }
+`;
+
+const DateHolder = styled.div`
+    font-family: 'Raleway';
+    font-size: 16px;
+    color: #C6C6C6;
+    font-weight: 400;
+`;
+
+const NameHolder = styled.div`
+    font-family: 'Raleway';
+    font-size: 16px;
+    color:#000000;
+    margin-left:10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-hyphens: auto;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    hyphens: auto;
+    text-overflow: ellipsis;
+    width:70%;
+`;
+
+const GreenSpan = styled.span`
+    font-family: 'Raleway';
+    font-size: 16px;
+    text-align: right;
+    color: #03AC00;
+`;
+
+const RedSpan = styled.span`
+    font-family: 'Raleway';
+    font-size: 16px;
+    text-align: right;
+    color: #C70000;
+`;
+
+const AccountBalance = styled.div`
+    display:flex;
+    justify-content: space-between;
 `;
