@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function Homepage() {
     const history = useHistory();
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
     console.log(transactions);
 
@@ -19,12 +19,12 @@ export default function Homepage() {
                 "Authorization": `Bearer ${user.token}`
             }
         }
-		const request = axios.get("http://localhost:4000/homepage", config);
-		request.then(response => {
-			setTransactions(response.data);
-		});
+        const request = axios.get("http://localhost:4000/homepage", config);
+        request.then(response => {
+            setTransactions(response.data);
+        });
         request.catch((error) => alert(error.response.data));
-	}, [user.token, user.id]);
+    }, [user.token, user.id]);
 
     return (
         <Container>
@@ -37,40 +37,43 @@ export default function Homepage() {
                     />
                 </PageTitle>
                 <TransactionsHolder>
-                    <div className = "scroller">
                     {transactions.length === 0
                         ? <NoTransactions>
                             Não há registros de entrada ou saída
                         </NoTransactions>
-                        : transactions.map((each)=>
-                        <EachTransaction>
-                            <div className = "leftside">
-                            <DateHolder>
-                                {each.data}
-                            </DateHolder>
-                            <NameHolder>
-                                {each.nomeTransacao}
-                            </NameHolder>
+                        : <>
+                            <div>
+                                {transactions[0].map((each) =>
+                                    <EachTransaction>
+                                        <div className="leftside">
+                                            <DateHolder>
+                                                {each.data}
+                                            </DateHolder>
+                                            <NameHolder>
+                                                {each.nomeTransacao}
+                                            </NameHolder>
+                                        </div>
+                                        {each.saida === 0
+                                            ? <GreenSpan>{each.entrada.toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</GreenSpan>
+                                            : <RedSpan>{each.saida.toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</RedSpan>}
+                                    </EachTransaction>
+                                ).reverse()}
                             </div>
-                            {each.saida === null
-                            ?<GreenSpan>{each.entrada}</GreenSpan>
-                            :<RedSpan>{each.saida}</RedSpan>}
-                        </EachTransaction>
-                        ).reverse()}
-                        </div>
-                        <AccountBalance>
-                            LALALA
-                        </AccountBalance>
+                            <AccountBalance>
+                                <p>Saldo</p> {transactions[1] < 0? <RedSpan>{transactions[1].toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</RedSpan> : <GreenSpan>{transactions[1].toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</GreenSpan>}
+                            </AccountBalance>
+                        </>
+                    }
                 </TransactionsHolder>
                 <ButtonsHolder>
-                    <TransactionButton onClick = {()=>history.push("/newincome")}>
+                    <TransactionButton onClick={() => history.push("/newincome")}>
                         <IoIosAddCircleOutline
                             fontSize="22"
                             color="#FFFFFF"
                         />
                         <p>Nova entrada</p>
                     </TransactionButton>
-                    <TransactionButton onClick = {()=>history.push("/newoutgoing")}>
+                    <TransactionButton onClick={() => history.push("/newoutgoing")}>
                         <IoIosRemoveCircleOutline
                             fontSize="22"
                             color="#FFFFFF"
@@ -79,7 +82,7 @@ export default function Homepage() {
                     </TransactionButton>
                 </ButtonsHolder>
             </ContentHolder>
-        </Container>
+        </Container >
     )
 }
 
@@ -121,7 +124,7 @@ const TransactionsHolder = styled.div`
     height:446px;
     width:90%;
     background-color:#FFFFFF;
-    padding:23px 12px 10px 12px;
+    padding:10px 12px 10px 12px;
     justify-content: space-between;
     .scroller{
         overflow-y: scroll;
@@ -221,4 +224,10 @@ const RedSpan = styled.span`
 const AccountBalance = styled.div`
     display:flex;
     justify-content: space-between;
+    font-family: 'Raleway';
+    font-size: 17px;
+    color: #000000;
+    p{
+        font-weight: bold;
+    }
 `;
