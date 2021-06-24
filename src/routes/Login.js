@@ -1,25 +1,38 @@
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default function Login() {
+    const {setUser} = useContext(UserContext);
     const history = useHistory();
-    const [user, setUser] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
 
     function completeLogin(e) {
         e.preventDefault();
         setIsDisabled(true);
+        if(email.length === 0 || password.length < 4){
+            alert("Por favor, preencha os campos corretamente.");
+            return;
+        }
         const body = {
-            user,
+            email,
             password
         }
-        history.push("/homepage");
-        //setIsDisabled(false);
+        const request = axios.post("http://localhost:4000/login", body);
+        request.then(response => {
+            setUser(response.data);
+            setIsDisabled(false);
+            history.push("/homepage");
+        });
+        request.catch((error)=>{
+            alert(error.response.data)});
+            setIsDisabled(false);
     }
 
     return (
@@ -31,7 +44,7 @@ export default function Login() {
                         placeholder="E-mail"
                         disabled={isDisabled}
                         type="email"
-                        onChange={(e) => setUser(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <Input
                         placeholder="Senha"

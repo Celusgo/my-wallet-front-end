@@ -1,6 +1,7 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import React from 'react';
 import './css/reset.css';
+import UserContext from './contexts/UserContext';
 import Register from './routes/Register';
 import Login from './routes/Login';
 import Homepage from './routes/Homepage';
@@ -8,8 +9,10 @@ import NewIncome from './routes/NewIncome';
 import NewOutgoing from './routes/NewOutgoing';
 
 export default function App() {
+    const [user, setUser] = React.useState(null);
 
     return (
+        <UserContext.Provider value ={{ user, setUser }}>
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact>
@@ -29,6 +32,7 @@ export default function App() {
                     </Route>
                 </Switch>
             </BrowserRouter>
+        </UserContext.Provider>
     )
 
 }

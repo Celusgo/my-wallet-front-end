@@ -15,6 +15,7 @@ export default function Register() {
 
     function completeRegistry(e) {
         e.preventDefault();
+        setIsDisabled(true);
         if(name.trim().length === 0 || email.length === 0 || password.length < 4){
             alert("Por favor, preencha os campos corretamente.");
             return;
@@ -23,7 +24,6 @@ export default function Register() {
             alert("As senhas não são iguais.");
             return;
         }
-        setIsDisabled(true);
         const body = {
             name,
             email,

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { IoExitOutline } from "react-icons/io5";
@@ -8,7 +9,9 @@ import { useHistory } from 'react-router-dom';
 
 export default function Homepage() {
     const history = useHistory();
+    const {user} = useContext(UserContext);
     const [transactions, setTransactions] = useState([]);
+    console.log(user);
     return (
         <Container>
             <ContentHolder>
