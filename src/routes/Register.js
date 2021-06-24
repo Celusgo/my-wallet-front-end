@@ -30,13 +30,14 @@ export default function Register() {
             password
         }
         const request = axios.post("http://localhost:4000/register", body);
-        request.then(response => {
+        request.then(() => {
             setIsDisabled(false);
             history.push("/");
         });
         request.catch((error)=>{
-            alert(error.response.data)});
+            alert(error.response.data)
             setIsDisabled(false);
+        });       
     }
 
     return (

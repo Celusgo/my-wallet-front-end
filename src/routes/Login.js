@@ -31,8 +31,10 @@ export default function Login() {
             history.push("/homepage");
         });
         request.catch((error)=>{
-            alert(error.response.data)});
+            alert(error.response.data);
             setIsDisabled(false);
+        });
+            
     }
 
     return (

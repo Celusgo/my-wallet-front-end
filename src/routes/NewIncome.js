@@ -1,10 +1,14 @@
 import styled from 'styled-components';
+import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import dayjs from 'dayjs';
 
 export default function NewIcome() {
+    const {user} = useContext(UserContext);
     const history = useHistory();
     const [value, setValue] = useState("");
     const [description, setDescription] = useState("");
@@ -13,14 +17,31 @@ export default function NewIcome() {
     function sendIncome(e){
         e.preventDefault();
         setIsDisabled(true);
-        const body = {
-            value,
-            description
+        if(description.trim().length === 0 || value.length < 4){
+            alert("Por favor, preencha os campos corretamente.");
+            return;
         }
-        console.log(body);
-        //history.push("/homepage");
-        //setIsDisabled(false);
-    }
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        }
+        const body = {
+            idUser: user.id,
+            description,
+            value,
+            data: dayjs().format('DD-MM')
+        }
+        const request = axios.post("http://localhost:4000/newincome", body, config);
+        request.then(() => {
+            setIsDisabled(false);
+            history.push("/homepage");
+        });
+        request.catch((error)=>{
+            alert(error.response.data);
+            setIsDisabled(false);
+        });
+    };
 
     return (
         <Container>
@@ -50,7 +71,7 @@ export default function NewIcome() {
                             color="#FFFFFF"
                             height={45}
                             width={100}
-                        /> : "Entrar"}
+                        /> : "Salvar entrada"}
                     </Button>
                 </form>
             </ContentHolder>

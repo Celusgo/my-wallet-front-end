@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import UserContext from '../contexts/UserContext';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
@@ -16,7 +16,7 @@ export default function Homepage() {
         <Container>
             <ContentHolder>
                 <PageTitle>
-                    <h1>Olá, usuário</h1>
+                    <h1>Olá, {user.nome}</h1>
                     <IoExitOutline
                         fontSize="25"
                         color="#FFFFFF"
