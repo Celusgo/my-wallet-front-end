@@ -148,6 +148,7 @@ const TransactionsHolder = styled.div`
     background-color:#FFFFFF;
     padding:10px 12px 10px 12px;
     justify-content: space-between;
+    border-radius: 5px;
     .scroller{
         overflow-y: scroll;
         margin-bottom:25px;
