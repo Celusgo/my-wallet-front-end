@@ -22,13 +22,13 @@ export default function Homepage() {
         request.then(response => {
             setTransactions(response.data);
         });
-        request.catch((error)=>{
+        request.catch((error) => {
             alert(error.response.data);
             history.push("/");
         });
     }, [user.token, user.id, history]);
 
-    function completeLogout(){
+    function completeLogout() {
         const config = {
             headers: {
                 "Authorization": `Bearer ${user.token}`
@@ -39,7 +39,7 @@ export default function Homepage() {
             localStorage.clear();
             history.push("/");
         });
-        request.catch((error)=>{
+        request.catch((error) => {
             alert(error.response.data);
             history.push("/");
         });
@@ -53,7 +53,7 @@ export default function Homepage() {
                     <IoExitOutline
                         fontSize="25"
                         color="#FFFFFF"
-                        onClick = {completeLogout}
+                        onClick={completeLogout}
                     />
                 </PageTitle>
                 <TransactionsHolder>
@@ -62,7 +62,7 @@ export default function Homepage() {
                             Não há registros de entrada ou saída
                         </NoTransactions>
                         : <>
-                            <div className = "scroller">
+                            <div className="scroller">
                                 {transactions[0].map((each) =>
                                     <EachTransaction>
                                         <div className="leftside">
@@ -74,15 +74,15 @@ export default function Homepage() {
                                             </NameHolder>
                                         </div>
                                         {each.saida === 0
-                                            ? <GreenSpan>{(each.entrada/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</GreenSpan>
-                                            : <RedSpan>{(each.saida/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</RedSpan>}
+                                            ? <GreenSpan>{(each.entrada / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>
+                                            : <RedSpan>{(each.saida / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>}
                                     </EachTransaction>
                                 ).reverse()}
                             </div>
                             <AccountBalance>
                                 <p>Saldo</p> {transactions[1] < 0
-                                ? <RedSpan>{(transactions[1]/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</RedSpan>
-                                : <GreenSpan>{(transactions[1]/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</GreenSpan>}
+                                    ? <RedSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>
+                                    : <GreenSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>}
                             </AccountBalance>
                         </>
                     }
