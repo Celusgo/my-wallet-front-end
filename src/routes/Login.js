@@ -11,8 +11,11 @@ export default function Login() {
     const history = useHistory();
     
     if (localStorage.length !== 0){
+        const user = JSON.parse(localStorage.user);
+        setUser(user);
         history.push("/homepage");
     }
+
     
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -32,7 +35,6 @@ export default function Login() {
         }
         const request = axios.post("http://localhost:4000/login", body);
         request.then(response => {
-            setUser(response.data);
             localStorage.setItem('user', JSON.stringify(response.data));
             setIsDisabled(false);
             history.push("/homepage");

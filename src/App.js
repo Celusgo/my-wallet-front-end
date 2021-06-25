@@ -9,7 +9,7 @@ import NewIncome from './routes/NewIncome';
 import NewOutgoing from './routes/NewOutgoing';
 
 export default function App() {
-    const [user, setUser] = React.useState(localStorage.lenght!==0? JSON.parse(localStorage.getItem('user')): []);
+    const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('user')));
 
     return (
         <UserContext.Provider value ={{ user, setUser }}>

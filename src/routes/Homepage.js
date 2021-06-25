@@ -6,11 +6,13 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { IoExitOutline } from "react-icons/io5";
 import { useHistory } from 'react-router-dom';
+import Loading from '../assets/Loading';
 
 export default function Homepage() {
     const { user } = useContext(UserContext);
     const history = useHistory();
     const [transactions, setTransactions] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const config = {
@@ -21,6 +23,7 @@ export default function Homepage() {
         const request = axios.get("http://localhost:4000/homepage", config);
         request.then(response => {
             setTransactions(response.data);
+            setIsLoading(false);
         });
         request.catch((error) => {
             alert(error.response.data);
@@ -57,35 +60,38 @@ export default function Homepage() {
                     />
                 </PageTitle>
                 <TransactionsHolder>
-                    {transactions.length === 0
-                        ? <NoTransactions>
-                            Não há registros de entrada ou saída
-                        </NoTransactions>
-                        : <>
-                            <div className="scroller">
-                                {transactions[0].map((each) =>
-                                    <EachTransaction>
-                                        <div className="leftside">
-                                            <DateHolder>
-                                                {each.data}
-                                            </DateHolder>
-                                            <NameHolder>
-                                                {each.nomeTransacao}
-                                            </NameHolder>
-                                        </div>
-                                        {each.saida === 0
-                                            ? <GreenSpan>{(each.entrada / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>
-                                            : <RedSpan>{(each.saida / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>}
-                                    </EachTransaction>
-                                ).reverse()}
-                            </div>
-                            <AccountBalance>
-                                <p>Saldo</p> {transactions[1] < 0
-                                    ? <RedSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>
-                                    : <GreenSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>}
-                            </AccountBalance>
-                        </>
-                    }
+                    {isLoading
+                    ? <Loading/>
+                :transactions.length === 0
+                    ? <NoTransactions>
+                        Não há registros de entrada ou saída
+                    </NoTransactions>
+                    : <>
+                        <div className="scroller">
+                            {transactions[0].map((each) =>
+                                <EachTransaction>
+                                    <div className="leftside">
+                                        <DateHolder>
+                                            {each.data}
+                                        </DateHolder>
+                                        <NameHolder>
+                                            {each.nomeTransacao}
+                                        </NameHolder>
+                                    </div>
+                                    {each.saida === 0
+                                        ? <GreenSpan>{(each.entrada / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>
+                                        : <RedSpan>{(each.saida / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>}
+                                </EachTransaction>
+                            ).reverse()}
+                        </div>
+                        <AccountBalance>
+                            <p>Saldo</p> {transactions[1] < 0
+                                ? <RedSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>
+                                : <GreenSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>}
+                        </AccountBalance>
+                    </>
+                }
+                    
                 </TransactionsHolder>
                 <ButtonsHolder>
                     <TransactionButton onClick={() => history.push("/newincome")}>
