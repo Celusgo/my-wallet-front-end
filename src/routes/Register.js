@@ -18,10 +18,12 @@ export default function Register() {
         setIsDisabled(true);
         if(name.trim().length === 0 || email.length === 0 || password.length < 4){
             alert("Por favor, preencha os campos corretamente.");
+            setIsDisabled(false);
             return;
         }
         else if(password !== confirmPassword){
             alert("As senhas não são iguais.");
+            setIsDisabled(false);
             return;
         }
         const body = {

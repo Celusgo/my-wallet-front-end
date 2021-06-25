@@ -17,8 +17,15 @@ export default function NewIcome() {
     function sendIncome(e){
         e.preventDefault();
         setIsDisabled(true);
-        if(description.trim().length === 0 || value.length < 4){
+        if(!user){
+            alert("Você não tem permissão para realizar esta ação!");
+            setIsDisabled(false);
+            history.push("/");
+            return;
+        }
+        if(description.trim().length === 0 || value.length === 0){
             alert("Por favor, preencha os campos corretamente.");
+            setIsDisabled(false);
             return;
         }
         const config = {
@@ -40,6 +47,7 @@ export default function NewIcome() {
         request.catch((error)=>{
             alert(error.response.data);
             setIsDisabled(false);
+            history.push("/");
         });
     };
 
@@ -51,7 +59,7 @@ export default function NewIcome() {
                 </PageTitle>
                 <form onSubmit = {sendIncome}>
                 <Input
-                        placeholder="Valor"
+                        placeholder="Valor (em centavos)"
                         disabled={isDisabled}
                         type="text"
                         onChange={(e) => setValue(e.target.value)}

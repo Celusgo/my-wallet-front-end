@@ -8,10 +8,9 @@ import { IoExitOutline } from "react-icons/io5";
 import { useHistory } from 'react-router-dom';
 
 export default function Homepage() {
-    const history = useHistory();
     const { user } = useContext(UserContext);
+    const history = useHistory();
     const [transactions, setTransactions] = useState([]);
-    console.log(transactions);
 
     useEffect(() => {
         const config = {
@@ -23,8 +22,28 @@ export default function Homepage() {
         request.then(response => {
             setTransactions(response.data);
         });
-        request.catch((error) => alert(error.response.data));
-    }, [user.token, user.id]);
+        request.catch((error)=>{
+            alert(error.response.data);
+            history.push("/");
+        });
+    }, [user.token, user.id, history]);
+
+    function completeLogout(){
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        }
+        const request = axios.post("http://localhost:4000/logout", {}, config);
+        request.then(() => {
+            localStorage.clear();
+            history.push("/");
+        });
+        request.catch((error)=>{
+            alert(error.response.data);
+            history.push("/");
+        });
+    }
 
     return (
         <Container>
@@ -34,6 +53,7 @@ export default function Homepage() {
                     <IoExitOutline
                         fontSize="25"
                         color="#FFFFFF"
+                        onClick = {completeLogout}
                     />
                 </PageTitle>
                 <TransactionsHolder>
@@ -42,7 +62,7 @@ export default function Homepage() {
                             Não há registros de entrada ou saída
                         </NoTransactions>
                         : <>
-                            <div>
+                            <div className = "scroller">
                                 {transactions[0].map((each) =>
                                     <EachTransaction>
                                         <div className="leftside">
@@ -54,13 +74,15 @@ export default function Homepage() {
                                             </NameHolder>
                                         </div>
                                         {each.saida === 0
-                                            ? <GreenSpan>{each.entrada.toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</GreenSpan>
-                                            : <RedSpan>{each.saida.toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</RedSpan>}
+                                            ? <GreenSpan>{(each.entrada/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</GreenSpan>
+                                            : <RedSpan>{(each.saida/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</RedSpan>}
                                     </EachTransaction>
                                 ).reverse()}
                             </div>
                             <AccountBalance>
-                                <p>Saldo</p> {transactions[1] < 0? <RedSpan>{transactions[1].toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</RedSpan> : <GreenSpan>{transactions[1].toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</GreenSpan>}
+                                <p>Saldo</p> {transactions[1] < 0
+                                ? <RedSpan>{(transactions[1]/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</RedSpan>
+                                : <GreenSpan>{(transactions[1]/100).toLocaleString("pt-BR", {style: 'currency', currency: 'BRL' })}</GreenSpan>}
                             </AccountBalance>
                         </>
                     }

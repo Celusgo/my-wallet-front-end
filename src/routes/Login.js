@@ -9,6 +9,11 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 export default function Login() {
     const {setUser} = useContext(UserContext);
     const history = useHistory();
+    
+    if (localStorage.length !== 0){
+        history.push("/homepage");
+    }
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
@@ -18,6 +23,7 @@ export default function Login() {
         setIsDisabled(true);
         if(email.length === 0 || password.length < 4){
             alert("Por favor, preencha os campos corretamente.");
+            setIsDisabled(false);
             return;
         }
         const body = {
@@ -27,6 +33,7 @@ export default function Login() {
         const request = axios.post("http://localhost:4000/login", body);
         request.then(response => {
             setUser(response.data);
+            localStorage.setItem('user', JSON.stringify(response.data));
             setIsDisabled(false);
             history.push("/homepage");
         });
