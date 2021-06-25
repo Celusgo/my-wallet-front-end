@@ -61,37 +61,36 @@ export default function Homepage() {
                 </PageTitle>
                 <TransactionsHolder>
                     {isLoading
-                    ? <Loading/>
-                :transactions.length === 0
-                    ? <NoTransactions>
-                        Não há registros de entrada ou saída
-                    </NoTransactions>
-                    : <>
-                        <div className="scroller">
-                            {transactions[0].map((each) =>
-                                <EachTransaction>
-                                    <div className="leftside">
-                                        <DateHolder>
-                                            {each.data}
-                                        </DateHolder>
-                                        <NameHolder>
-                                            {each.nomeTransacao}
-                                        </NameHolder>
-                                    </div>
-                                    {each.saida === 0
-                                        ? <GreenSpan>{(each.entrada / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>
-                                        : <RedSpan>{(each.saida / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>}
-                                </EachTransaction>
-                            ).reverse()}
-                        </div>
-                        <AccountBalance>
-                            <p>Saldo</p> {transactions[1] < 0
-                                ? <RedSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>
-                                : <GreenSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>}
-                        </AccountBalance>
-                    </>
-                }
-                    
+                        ? <Loading />
+                        : transactions.length === 0
+                            ? <NoTransactions>
+                                Não há registros de entrada ou saída
+                            </NoTransactions>
+                            : <>
+                                <div className="scroller">
+                                    {transactions[0].map((each) =>
+                                        <EachTransaction>
+                                            <div className="leftside">
+                                                <DateHolder>
+                                                    {each.data}
+                                                </DateHolder>
+                                                <NameHolder>
+                                                    {each.nomeTransacao}
+                                                </NameHolder>
+                                            </div>
+                                            {each.saida === 0
+                                                ? <GreenSpan>{(each.entrada / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>
+                                                : <RedSpan>{(each.saida / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>}
+                                        </EachTransaction>
+                                    ).reverse()}
+                                </div>
+                                <AccountBalance>
+                                    <p>Saldo</p> {transactions[1] < 0
+                                        ? <RedSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</RedSpan>
+                                        : <GreenSpan>{(transactions[1] / 100).toLocaleString("pt-BR", { style: 'currency', currency: 'BRL' })}</GreenSpan>}
+                                </AccountBalance>
+                            </>
+                    }
                 </TransactionsHolder>
                 <ButtonsHolder>
                     <TransactionButton onClick={() => history.push("/newincome")}>
