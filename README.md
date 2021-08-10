@@ -38,7 +38,7 @@ git clone https://github.com/Celusgo/my-wallet-frontend
 ```bash
 npm i
 ```
-5. In the root folder, create a file named ``.env`` in the same format as the ``.env.example`` file and fill with your information. e.g.: ``http://localhost:YOURPORT``, where ``YOURPORT`` must be the same ``PORT`` number specified in your ``back-end .env`` file.
+5. In the root folder, create a file named ``.env`` in the same format as the ``.env.example`` file and fill with your information. e.g.: ``REACT_APP_API_BASE_URL=http://localhost:YOURPORT``, where ``YOURPORT`` must be the same ``PORT`` number specified in your ``back-end .env`` file.
 
 6. Run the front-end with
 ```bash
