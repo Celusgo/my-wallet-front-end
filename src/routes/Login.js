@@ -33,7 +33,7 @@ export default function Login() {
             email,
             password
         }
-        const request = axios.post("http://localhost:4000/login", body);
+        const request = axios.post(`${process.env.REACT_APP_API_BASE_URL}/login`, body);
         request.then(response => {
             localStorage.setItem('user', JSON.stringify(response.data));
             setIsDisabled(false);
