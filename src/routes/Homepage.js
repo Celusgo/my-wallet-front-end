@@ -20,7 +20,7 @@ export default function Homepage() {
                 "Authorization": `Bearer ${user.token}`
             }
         }
-        const request = axios.get("http://localhost:4000/homepage", config);
+        const request = axios.get(`${process.env.REACT_APP_API_BASE_URL}/homepage`, config);
         request.then(response => {
             setTransactions(response.data);
             setIsLoading(false);
@@ -37,7 +37,7 @@ export default function Homepage() {
                 "Authorization": `Bearer ${user.token}`
             }
         }
-        const request = axios.post("http://localhost:4000/logout", {}, config);
+        const request = axios.post(`${process.env.REACT_APP_API_BASE_URL}/logout`, {}, config);
         request.then(() => {
             localStorage.clear();
             history.push("/");

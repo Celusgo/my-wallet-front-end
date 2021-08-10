@@ -31,7 +31,7 @@ export default function Register() {
             email,
             password
         }
-        const request = axios.post("http://localhost:4000/register", body);
+        const request = axios.post(`${process.env.REACT_APP_API_BASE_URL}/register`, body);
         request.then(() => {
             setIsDisabled(false);
             history.push("/");

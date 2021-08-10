@@ -39,7 +39,7 @@ export default function NewIcome() {
             value,
             data: dayjs().format('DD-MM')
         }
-        const request = axios.post("http://localhost:4000/newincome", body, config);
+        const request = axios.post(`${process.env.REACT_APP_API_BASE_URL}/newincome`, body, config);
         request.then(() => {
             setIsDisabled(false);
             history.push("/homepage");
