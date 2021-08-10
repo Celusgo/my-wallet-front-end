@@ -38,12 +38,14 @@ git clone https://github.com/Celusgo/my-wallet-frontend
 ```bash
 npm i
 ```
-5. Run the front-end with
+5. In the root folder, create a file named ``.env`` in the same format as the ``.env.example`` file and fill with your information. e.g.: ``http://localhost:YOURPORT``, where ``YOURPORT`` must be the same ``PORT`` number specified in your ``back-end .env`` file.
+
+6. Run the front-end with
 ```bash
 npm start
 ```
-6. You can optionally build the project running
+7. You can optionally build the project running
 ```bash
 npm run build
 ```
-7. Finally access http://localhost:3000 on your favorite browser
+8. Finally access http://localhost:3000 on your favorite browser
