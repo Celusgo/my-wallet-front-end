@@ -84,7 +84,7 @@ export default function Register() {
                     </Button>
                 </form>
                 <ToLogin>
-                    <Link to="/"><p>Já tem uma conta? Entre agora!</p></Link>
+                    {isDisabled ? <p className = "opacity">Já tem uma conta? Entre agora!</p> : <Link to="/"><p>Já tem uma conta? Entre agora!</p></Link> }
                 </ToLogin>
             </ContentHolder>
         </Container>
@@ -166,4 +166,9 @@ const ToLogin = styled.div`
     color:#FFFFFF;
     font-size:15px;
     font-weight: bold;
+    p{
+        &.opacity{
+        color:lightgrey;
+    }
+}
 `;

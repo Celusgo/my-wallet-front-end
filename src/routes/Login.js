@@ -76,7 +76,7 @@ export default function Login() {
                     </Button>
                 </form>
                 <ToRegister>
-                    <Link to="/register"><p>Primeira vez? Cadastre-se!</p></Link>
+                    {isDisabled ? <p className = "opacity">Primeira vez? Cadastre-se!</p> : <Link to="/register"><p>Primeira vez? Cadastre-se!</p></Link> }
                 </ToRegister>
             </ContentHolder>
         </Container>
@@ -158,4 +158,9 @@ const ToRegister = styled.div`
     color:#FFFFFF;
     font-size:15px;
     font-weight: bold;
+    p{
+        &.opacity{
+        color:lightgrey;
+    }
+    }
 `;
