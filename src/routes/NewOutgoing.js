@@ -90,7 +90,6 @@ export default function NewOutgoing() {
 
 const Container = styled.div`
     width:100%;
-    margin-top:50%;
     box-sizing: border-box;
     display:flex;
     background-color: #8C11BE;
