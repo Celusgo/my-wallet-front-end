@@ -94,13 +94,14 @@ export default function Register() {
 
 const Container = styled.div`
     width:100%;
+    margin-top:25%;
     box-sizing: border-box;
     display:flex;
     background-color: #8C11BE;
 `;
 
 const ContentHolder = styled.div`
-    margin:auto auto;
+    margin:0 auto;
     display:flex;
     flex-direction:column;
     width:100%;

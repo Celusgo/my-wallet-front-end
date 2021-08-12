@@ -86,18 +86,18 @@ export default function Login() {
 
 const Container = styled.div`
     width:100%;
+    margin-top:40%;
     box-sizing: border-box;
     display:flex;
     background-color: #8C11BE;
 `;
 
 const ContentHolder = styled.div`
-    margin:auto auto;
+    margin:0 auto;
     display:flex;
     flex-direction:column;
     width:100%;
     align-items:center;
-
     h1{
         font-family: 'Saira Stencil One';
         font-size:32px;
