@@ -86,7 +86,6 @@ export default function Login() {
 
 const Container = styled.div`
     width:100%;
-    min-height:100vh;
     box-sizing: border-box;
     display:flex;
     background-color: #8C11BE;
