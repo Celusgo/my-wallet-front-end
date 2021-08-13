@@ -86,10 +86,11 @@ export default function Login() {
 
 const Container = styled.div`
     width:100%;
-    margin-top:40%;
+    height:100vh;
     box-sizing: border-box;
     display:flex;
-    background-color: #8C11BE;
+    align-items: center;
+    justify-content: center;
 `;
 
 const ContentHolder = styled.div`
