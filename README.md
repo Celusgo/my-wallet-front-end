@@ -21,6 +21,7 @@ This is an web application with which lots of people can manage their own expens
 - Add revenue
 
 By using this app any user can learn how they've been using their money and always keep track of your balance.
+In the future, I would like to add multi-language settings, as well as another currencies (the one implemented is BRL).
 
 ## Technologies
 The following tools and frameworks were used in the construction of the project:<br>
