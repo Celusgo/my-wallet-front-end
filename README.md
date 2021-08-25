@@ -12,7 +12,7 @@ Try it out now at https://my-wallet-frontend-three.vercel.app
 
 ## About
 
-This is an web application with which lots of people can manage their own expenses and revenues. It was designed to smaller screens (such as cellphones) but it works well on bigger screens as well. Below are the implemented features:
+This is an web application with which lots of people can manage their own expenses and revenues. It was designed to smaller screens (such as cellphones) but it works fine on bigger screens as well. Below are the implemented features:
 
 - Sign Up
 - Login
